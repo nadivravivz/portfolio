@@ -25,7 +25,7 @@ pipeline {
           sh 'echo $BRANCH_NAME'
           sh 'echo "------------------------Building and E2E TEST---------------------------"'
           sh 'docker-compose up --build -d'
-          sh 'curl localhost:5000'
+          sh 'curl curl 172.20.0.1:5000'
           sh 'docker-compose down'
         }
       }
@@ -38,7 +38,7 @@ pipeline {
           sh 'echo $BRANCH_NAME'
           sh 'echo "------------------------Building and E2E TEST---------------------------"'
           sh 'docker-compose up --build -d'
-          sh 'curl localhost:5000'
+          sh 'curl curl 172.20.0.1:5000'
           sh 'docker-compose down'
           }
       }
