@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     environment {
-      REGION = "eu-central-1"
-      AWSPUT = "text"
-      REPONAME = "ravivrepo"
-      AWSIP = "3.67.42.146"
+      NOTHING = "NOTHING"
     }
 
     stages {
@@ -22,24 +19,46 @@ pipeline {
         }
         steps{
           sh 'echo $BRANCH_NAME'
-          sh 'echo $BRANCH_NAME'
           sh 'echo "------------------------Building and E2E TEST---------------------------"'
+          sh 'docker build -t portfolio:latest .'
           sh 'docker-compose up --build -d'
           sh 'curl curl 172.20.0.1:5000'
           sh 'docker-compose down'
+          sh 'echo "------------------------Pushing to ECR---------------------------"'
+          sh 'docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) 377834893374.dkr.ecr.eu-central-1.amazonaws.com'
+          sh 'docker push 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:latest'
+          sh 'echo "------------------------Tagging and Push Tag---------------------------"'
+          sh 'git tag $(cat TAGVER)'
+          sh 'git push --tags'
+          sh 'git clean -f'
         }
       }
 
       stage('On Branch Feature'){
         when {
-          branch 'feature/*'
+          branch 'release/*'
           }
         steps{
           sh 'echo $BRANCH_NAME'
+          sh 'echo "------------------------Calculate Tag---------------------------"'
+          sh 'git fetch --tags'
+          sh 'echo $BRANCH_NAME | cut -d/ -f2 > RELNUM'
+          sh 'git tag | grep $(cat RELNUM) | tail -1 | echo "$(($(cut -d. -f3)+1))" > TAGY'
+          sh 'echo $(cat TAGY)'
+          sh 'echo $(cat RELNUM)'
+          sh 'echo "$(cat RELNUM).$(cat TAGY)" > TAGVER'
           sh 'echo "------------------------Building and E2E TEST---------------------------"'
+          sh 'docker build -t portfolio:$(cat TAGVER) .'
           sh 'docker-compose up --build -d'
           sh 'curl curl 172.20.0.1:5000'
           sh 'docker-compose down'
+          sh 'echo "------------------------Pushing to ECR---------------------------"'
+          sh 'docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) 377834893374.dkr.ecr.eu-central-1.amazonaws.com'
+          sh 'docker push 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:$(cat TAGVER)'
+          sh 'echo "------------------------Tagging and Push Tag---------------------------"'
+          sh 'git tag $(cat TAGVER)'
+          sh 'git push --tags'
+          sh 'git clean -f'
           }
       }
 
@@ -47,7 +66,7 @@ pipeline {
         when {
             not {
                 anyOf {
-                  branch 'feature/*';
+                  branch 'release/*';
                   branch 'master'
                 }
             }
