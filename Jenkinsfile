@@ -39,7 +39,7 @@ pipeline {
             not {
                 anyOf {
                   branch 'feature/*';
-                  branch 'main'
+                  branch 'master'
                 }
             }
         }
