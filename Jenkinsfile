@@ -20,7 +20,7 @@ pipeline {
         steps{
           sh 'echo $BRANCH_NAME'
           sh 'echo "------------------------Building and E2E TEST---------------------------"'
-          sh 'docker build -t portfolio:latest .'
+          sh 'docker build -t 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:latest .'
           sh 'docker-compose up --build -d'
           sh 'docker exec flask curl localhost:5000'
           sh 'docker-compose down'
@@ -48,7 +48,7 @@ pipeline {
           sh 'echo $(cat RELNUM)'
           sh 'echo "$(cat RELNUM).$(cat TAGY)" > TAGVER'
           sh 'echo "------------------------Building and E2E TEST---------------------------"'
-          sh 'docker build -t portfolio:$(cat TAGVER) .'
+          sh 'docker build -t 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:$(cat TAGVER) .'
           sh 'docker-compose up --build -d'
           sh 'docker exec flask curl localhost:5000'
           sh 'docker-compose down'
