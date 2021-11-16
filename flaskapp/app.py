@@ -2,11 +2,17 @@ import os
 import json
 import pymongo
 from flask import Flask, render_template, request, jsonify
+import datetime, logging, sys, json_logging, flask
 
 app = Flask(__name__)
 
+json_logging.init_flask(enable_json=True)
+json_logging.init_request_instrument(app)
+logger = logging.getLogger("test-logger")
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler(sys.stdout))
 
-mongodb_client = pymongo.MongoClient("mongodb://admin:12345@mongodb:27017/admin")
+mongodb_client = pymongo.MongoClient(os.environ['MONGODBURL'])
 db = mongodb_client['cooldb']
 collection = db['coolcollection']
 
@@ -38,4 +44,4 @@ def get():
 
 
 if __name__=='__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, use_reloader=False)
