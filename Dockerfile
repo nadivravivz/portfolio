@@ -4,6 +4,7 @@ COPY ./flaskapp /flaskapp
 WORKDIR flaskapp
 ENV MONGODBURL="mongodb://admin:12345@mongodb:27017/admin"
 
+RUN touch ok 
 RUN pip install -r requirements.txt
 RUN apk add curl 
 
