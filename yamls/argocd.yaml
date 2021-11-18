@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portfolio
+  namespace: default
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: portfolio=377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio
+    argocd-image-updater.argoproj.io/portfolio.update-strategy: latest
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/nadivravivz/portfolio.git
+    targetRevision: HEAD
+    path: portfoliochart
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
