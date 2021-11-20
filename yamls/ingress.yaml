@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: echoapp-ingress
+  name: portfolio-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - ravivportfolio.tk
+      - ad7e9104de7d04c7abe4c4c62a4a65c0-1420413677.eu-central-1.elb.amazonaws.com
     secretName: ravivportfolio-tls
   rules:
-  - host: ravivportfolio.tk
+  - host: ad7e9104de7d04c7abe4c4c62a4a65c0-1420413677.eu-central-1.elb.amazonaws.com
     http:
       paths:
       - path: /
