@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - a552d0b44af114b6bacaa0804468b8bc-1221253337.eu-central-1.elb.amazonaws.com
+      - ravivportfolio.tk
     secretName: ravivportfolio-tls
   rules:
-  - host: a552d0b44af114b6bacaa0804468b8bc-1221253337.eu-central-1.elb.amazonaws.com
+  - host: ravivportfolio.tk
     http:
       paths:
       - path: /
