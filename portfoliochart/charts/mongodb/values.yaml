@@ -1641,7 +1641,7 @@ metrics:
     ## @param metrics.serviceMonitor.additionalLabels Used to pass Labels that are used by the Prometheus installed in your cluster to select Service Monitors to work with
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
     ##
-    additionalLabels: {release.kube-prometheus-stack}
+    additionalLabels: release.kube-prometheus-stack
   ## Custom PrometheusRule to be defined
   ## ref: https://github.com/coreos/prometheus-operator#customresourcedefinitions
   ##
