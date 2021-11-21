@@ -265,9 +265,23 @@ resource "helm_release" "ingress-nginx" {
   chart      = "ingress-nginx"
   namespace = "default"
   depends_on = [helm_release.portfolio]
-  values = [<<EOF
-  EOF
-  ]
+  values = []
+  set {
+    name  = "controller.metrics.enabled"
+    value = "true"
+  }
+  set {
+    name  = "controller.metrics.serviceMonitor.enabled"
+    value = "true"
+  }
+  set {
+    name  = "controller.metrics.serviceMonitor.namespace"
+    value = "kube-prometheus"
+  }
+  set {
+    name  = "controller.metrics.serviceMonitor.additionalLabels.release"
+    value = "kube-prometheus-stack"
+  }
 }
 
 
