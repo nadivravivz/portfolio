@@ -1503,7 +1503,7 @@ hidden:
 metrics:
   ## @param metrics.enabled Enable using a sidecar Prometheus exporter
   ##
-  enabled: false
+  enabled: true
   ## Bitnami MongoDB&reg; Promtheus Exporter image
   ## ref: https://hub.docker.com/r/bitnami/mongodb-exporter/tags/
   ## @param metrics.image.registry MongoDB&reg; Prometheus exporter image registry
@@ -1641,7 +1641,7 @@ metrics:
     ## @param metrics.serviceMonitor.additionalLabels Used to pass Labels that are used by the Prometheus installed in your cluster to select Service Monitors to work with
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
     ##
-    additionalLabels: "release=kube-prometheus-stack"
+    additionalLabels: release.kube-prometheus-stack
   ## Custom PrometheusRule to be defined
   ## ref: https://github.com/coreos/prometheus-operator#customresourcedefinitions
   ##
