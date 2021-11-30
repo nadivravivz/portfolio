@@ -9,8 +9,10 @@ pipeline {
 
       stage('Build'){
         when {
-            branch 'master'
-            branch 'release/*'
+            anyOf {
+              branch 'release/*';
+              branch 'master'
+            }
         }
         steps{
           sh 'echo $BRANCH_NAME'
@@ -20,8 +22,10 @@ pipeline {
 
       stage('Tests'){
         when {
-            branch 'master'
-            branch 'release/*'
+            anyOf {
+              branch 'release/*';
+              branch 'master'
+            }
         }
         steps{
           sh 'echo $BRANCH_NAME'
