@@ -38,6 +38,7 @@ pipeline {
         }
         steps{
           sh 'echo $BRANCH_NAME'
+          sh 'docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) 377834893374.dkr.ecr.eu-central-1.amazonaws.com'
           sh 'docker tag portfolio:latest 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:latest'
           sh 'docker push 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:latest'
           sh 'git clean -f'
@@ -57,6 +58,7 @@ pipeline {
           sh 'echo $(cat RELNUM)'
           sh 'echo "$(cat RELNUM).$(cat TAGY)" > TAGVER'
           sh 'docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) 377834893374.dkr.ecr.eu-central-1.amazonaws.com'
+          sh 'docker tag portfolio:latest 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:$(cat TAGVER)'
           sh 'docker push 377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio:$(cat TAGVER)'
           sh 'git tag $(cat TAGVER)'
           sh 'git push --tags'
