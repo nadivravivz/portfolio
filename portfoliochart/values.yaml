@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: "<AWS ID>.dkr.ecr.eu-central-1.amazonaws.com/portfolio"
+  repository: "377834893374.dkr.ecr.eu-central-1.amazonaws.com/portfolio"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.1.1"
